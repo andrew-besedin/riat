@@ -4,11 +4,14 @@ import { UsersService } from './users.service';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { DataSource } from 'typeorm';
 import { ConfigModule } from '@nestjs/config';
+import Users from '@app/entities/users.entity';
 
 @Module({
   imports: [
     ConfigModule.forRoot({
       isGlobal: true,
+      envFilePath:
+        process.env.NODE_ENV === 'development' ? '.development.env' : '.env',
     }),
     TypeOrmModule.forRootAsync({
       useFactory: () => ({
@@ -17,7 +20,7 @@ import { ConfigModule } from '@nestjs/config';
         port: 5432,
         username: 'postgres',
         password: process.env.DB_PASSWORD,
-        entities: [],
+        entities: [Users],
         synchronize: true,
       }),
 
@@ -26,7 +29,7 @@ import { ConfigModule } from '@nestjs/config';
         return dataSource;
       },
     }),
-    TypeOrmModule.forFeature([]),
+    TypeOrmModule.forFeature([Users]),
   ],
   controllers: [UsersController],
   providers: [UsersService],

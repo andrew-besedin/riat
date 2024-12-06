@@ -12,6 +12,8 @@ import { ConfigModule } from '@nestjs/config';
   imports: [
     ConfigModule.forRoot({
       isGlobal: true,
+      envFilePath:
+        process.env.NODE_ENV === 'development' ? '.development.env' : '.env',
     }),
     ClientsModule.registerAsync({
       isGlobal: true,

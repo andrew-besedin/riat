@@ -37,8 +37,8 @@ services:
     develop:
       watch:
         - action: sync
-          path: ./apps/resource-notifier-server
-          target: /app/apps/resource-notifier-server
+          path: ./apps/riat
+          target: /app/apps/riat
     environment:
       - NODE_ENV=development
   
