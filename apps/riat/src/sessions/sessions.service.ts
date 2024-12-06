@@ -2,7 +2,7 @@ import {
   SESSIONS_SERVICE_NAME,
   SessionsServiceClient,
 } from '@app/common/types/proto/sessions';
-import { Inject, Injectable, OnModuleInit } from '@nestjs/common';
+import { Inject, Injectable, Logger, OnModuleInit } from '@nestjs/common';
 import { ClientGrpc } from '@nestjs/microservices';
 
 @Injectable()
@@ -16,6 +16,7 @@ export class SessionsService implements OnModuleInit {
     );
   }
   getAll() {
+    Logger.log('getAll gRPC call');
     return this.usersService.getSessionsList({});
   }
 }
