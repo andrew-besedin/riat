@@ -6,9 +6,13 @@ import {
   USERS_SERVICE_NAME,
 } from '@app/common/types/proto/users';
 import { join } from 'path';
+import { ConfigModule } from '@nestjs/config';
 
 @Module({
   imports: [
+    ConfigModule.forRoot({
+      isGlobal: true,
+    }),
     ClientsModule.registerAsync({
       isGlobal: true,
       clients: [
