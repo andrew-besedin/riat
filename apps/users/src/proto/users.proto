@@ -2,3 +2,16 @@ syntax = "proto3";
 
 package users;
 
+service UsersService {
+    rpc CreateUser (CreateUserRequest) returns (CreateUserResponse);
+}
+
+message CreateUserRequest {
+    string name = 1;
+    string email = 2;
+    string password = 3;
+}
+
+message CreateUserResponse {
+    bool success = 1;
+}

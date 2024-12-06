@@ -1,0 +1,80 @@
+x-api-gateway-base: &api-gateway-base
+  build:
+    context: .
+    dockerfile: ./docker/production/api-gateway.Dockerfile
+  ports:
+    - 3000:3000
+
+
+x-users-service-base: &users-service-base
+  build:
+    context: .
+    dockerfile: ./docker/production/users.Dockerfile
+  expose:
+    - 50051:50051
+
+services:
+  db:
+    image: postgres
+    restart: always
+    environment:
+      POSTGRES_PASSWORD: ${DB_PASSWORD:-example}
+    expose:
+      - 5432
+    ports:
+      - 5433:5432
+    volumes:
+      - pgdata:/var/lib/postgresql/data 
+    profiles:
+      - dev
+      - prod
+ 
+  api-gateway-dev:
+    <<: *api-gateway-base
+    profiles:
+      - dev
+    command: npm run start:dev
+    develop:
+      watch:
+        - action: sync
+          path: ./apps/resource-notifier-server
+          target: /app/apps/resource-notifier-server
+    environment:
+      - NODE_ENV=development
+  
+  users-service-dev:
+    <<: *users-service-base
+    profiles:
+      - dev
+    command: npm run start:dev users
+    develop:
+      watch:
+        - action: sync
+          path: ./apps/users
+          target: /app/apps/users
+    environment:
+      - NODE_ENV=development
+
+
+
+
+
+
+
+
+  api-gateway-prod:
+    <<: *api-gateway-base
+    profiles:
+      - prod
+    environment:
+      - NODE_ENV=production
+  
+  users-service-prod:
+    <<: *users-service-base
+    profiles:
+      - prod
+    environment:
+      - NODE_ENV=production
+
+volumes:
+  pgdata:

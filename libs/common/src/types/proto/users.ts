@@ -5,7 +5,46 @@
 // source: proto/users.proto
 
 /* eslint-disable */
+import { GrpcMethod, GrpcStreamMethod } from "@nestjs/microservices";
+import { Observable } from "rxjs";
 
 export const protobufPackage = "users";
 
+export interface CreateUserRequest {
+  name: string;
+  email: string;
+  password: string;
+}
+
+export interface CreateUserResponse {
+  success: boolean;
+}
+
 export const USERS_PACKAGE_NAME = "users";
+
+export interface UsersServiceClient {
+  createUser(request: CreateUserRequest): Observable<CreateUserResponse>;
+}
+
+export interface UsersServiceController {
+  createUser(
+    request: CreateUserRequest,
+  ): Promise<CreateUserResponse> | Observable<CreateUserResponse> | CreateUserResponse;
+}
+
+export function UsersServiceControllerMethods() {
+  return function (constructor: Function) {
+    const grpcMethods: string[] = ["createUser"];
+    for (const method of grpcMethods) {
+      const descriptor: any = Reflect.getOwnPropertyDescriptor(constructor.prototype, method);
+      GrpcMethod("UsersService", method)(constructor.prototype[method], method, descriptor);
+    }
+    const grpcStreamMethods: string[] = [];
+    for (const method of grpcStreamMethods) {
+      const descriptor: any = Reflect.getOwnPropertyDescriptor(constructor.prototype, method);
+      GrpcStreamMethod("UsersService", method)(constructor.prototype[method], method, descriptor);
+    }
+  };
+}
+
+export const USERS_SERVICE_NAME = "UsersService";
