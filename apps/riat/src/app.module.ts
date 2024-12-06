@@ -12,9 +12,17 @@ import {
   SESSIONS_PACKAGE_NAME,
   SESSIONS_SERVICE_NAME,
 } from '@app/common/types/proto/sessions';
+import { ThrottlerGuard, ThrottlerModule } from '@nestjs/throttler';
+import { APP_GUARD } from '@nestjs/core';
 
 @Module({
   imports: [
+    ThrottlerModule.forRoot([
+      {
+        ttl: 10e3,
+        limit: 10,
+      },
+    ]),
     ConfigModule.forRoot({
       isGlobal: true,
       envFilePath:
@@ -56,6 +64,11 @@ import {
     SessionsModule,
   ],
   controllers: [],
-  providers: [],
+  providers: [
+    {
+      provide: APP_GUARD,
+      useClass: ThrottlerGuard,
+    },
+  ],
 })
 export class AppModule {}
