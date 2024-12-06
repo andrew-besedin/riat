@@ -1,8 +1,32 @@
 {
   "$schema": "https://json.schemastore.org/nest-cli",
   "collection": "@nestjs/schematics",
-  "sourceRoot": "src",
+  "sourceRoot": "apps/riat/src",
   "compilerOptions": {
-    "deleteOutDir": true
+    "deleteOutDir": true,
+    "webpack": true,
+    "tsConfigPath": "apps/riat/tsconfig.app.json"
+  },
+  "monorepo": true,
+  "root": "apps/riat",
+  "projects": {
+    "riat": {
+      "type": "application",
+      "root": "apps/riat",
+      "entryFile": "main",
+      "sourceRoot": "apps/riat/src",
+      "compilerOptions": {
+        "tsConfigPath": "apps/riat/tsconfig.app.json"
+      }
+    },
+    "users": {
+      "type": "application",
+      "root": "apps/users",
+      "entryFile": "main",
+      "sourceRoot": "apps/users/src",
+      "compilerOptions": {
+        "tsConfigPath": "apps/users/tsconfig.app.json"
+      }
+    }
   }
 }
