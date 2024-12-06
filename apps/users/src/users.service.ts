@@ -8,15 +8,15 @@ import { ClientGrpc } from '@nestjs/microservices';
 
 @Injectable()
 export class UsersService implements OnModuleInit {
-  private subscriptionsService: UsersServiceClient;
+  private usersService: UsersServiceClient;
   constructor(@Inject(USERS_SERVICE_NAME) private client: ClientGrpc) {}
 
   onModuleInit() {
-    this.subscriptionsService =
+    this.usersService =
       this.client.getService<UsersServiceClient>(USERS_SERVICE_NAME);
   }
 
   createUser(request: CreateUserRequest) {
-    return this.subscriptionsService.createUser(request);
+    return this.usersService.createUser(request);
   }
 }
