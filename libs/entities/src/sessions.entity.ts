@@ -16,6 +16,6 @@ export default class Sessions {
   @Column()
   start_time: Date;
 
-  @Column('text', { array: true })
+  @Column('character varying', { array: true })
   booked_seats: string[];
 }
