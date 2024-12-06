@@ -22,6 +22,7 @@ import { DataSource } from 'typeorm';
         return dataSource;
       },
     }),
+    TypeOrmModule.forFeature([]),
   ],
   controllers: [UsersController],
   providers: [UsersService],
