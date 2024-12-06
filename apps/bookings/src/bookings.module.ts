@@ -9,6 +9,7 @@ import Sessions from '@app/entities/sessions.entity';
 import Films from '@app/entities/films.entity';
 import Halls from '@app/entities/halls.entity';
 import { ConfigModule } from '@nestjs/config';
+import { ClientsModule, Transport } from '@nestjs/microservices';
 
 @Module({
   imports: [
@@ -34,6 +35,19 @@ import { ConfigModule } from '@nestjs/config';
       },
     }),
     TypeOrmModule.forFeature([Users, Bookings, Films, Halls, Sessions]),
+    ClientsModule.register({
+      isGlobal: true,
+      clients: [
+        {
+          name: 'BOOKINGS_RMQ',
+          transport: Transport.RMQ,
+          options: {
+            urls: ['amqp://localhost:5672'],
+            queue: 'bookings_queue',
+          },
+        },
+      ],
+    }),
   ],
   controllers: [BookingsController],
   providers: [BookingsService],

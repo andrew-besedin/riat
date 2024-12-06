@@ -27,6 +27,11 @@ x-booking-service-base: &booking-service-base
   expose:
     - 50051:50051
 
+x-bookings-consumer-base: &bookings-consumer-base
+  build:
+    context: .
+    dockerfile: ./docker/production/bookings-consumer.Dockerfile
+
 services:
   db:
     image: postgres
@@ -112,6 +117,20 @@ services:
       - NODE_ENV=development
 
 
+  bookings-consumer-dev:
+    <<: *bookings-consumer-base
+    profiles:
+      - dev
+    command: npm run start:dev bookings-consumer
+    develop:
+      watch:
+        - action: sync
+          path: ./apps/bookings-consumer
+          target: /app/apps/bookings-consumer
+    environment:
+      - NODE_ENV=development
+
+
 
 
 
@@ -139,6 +158,13 @@ services:
 
   bookings-service-prod:
     <<: *booking-service-base
+    profiles:
+      - prod
+    environment:
+      - NODE_ENV=production
+
+  bookings-consumer-prod:
+    <<: *bookings-consumer-base
     profiles:
       - prod
     environment:

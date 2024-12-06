@@ -81,6 +81,15 @@
       "compilerOptions": {
         "tsConfigPath": "apps/bookings/tsconfig.app.json"
       }
+    },
+    "bookings-consumer": {
+      "type": "application",
+      "root": "apps/bookings-consumer",
+      "entryFile": "main",
+      "sourceRoot": "apps/bookings-consumer/src",
+      "compilerOptions": {
+        "tsConfigPath": "apps/bookings-consumer/tsconfig.app.json"
+      }
     }
   }
 }
