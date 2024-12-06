@@ -31,6 +31,7 @@
     "@nestjs/platform-express": "^10.0.0",
     "reflect-metadata": "^0.2.0",
     "rxjs": "^7.8.1",
+    "sync-content": "^2.0.1",
     "ts-proto": "^2.5.0"
   },
   "devDependencies": {
