@@ -5,7 +5,13 @@
   "compilerOptions": {
     "deleteOutDir": true,
     "webpack": true,
-    "tsConfigPath": "apps/riat/tsconfig.app.json"
+    "tsConfigPath": "apps/riat/tsconfig.app.json",
+    "assets": [
+      {
+        "include": "proto/*.proto",
+        "watchAssets": true
+      }
+    ]
   },
   "monorepo": true,
   "root": "apps/riat",
@@ -16,7 +22,13 @@
       "entryFile": "main",
       "sourceRoot": "apps/riat/src",
       "compilerOptions": {
-        "tsConfigPath": "apps/riat/tsconfig.app.json"
+        "tsConfigPath": "apps/riat/tsconfig.app.json",
+        "assets": [
+          {
+            "include": "proto/*.proto",
+            "watchAssets": true
+          }
+        ]
       }
     },
     "users": {
@@ -25,7 +37,13 @@
       "entryFile": "main",
       "sourceRoot": "apps/users/src",
       "compilerOptions": {
-        "tsConfigPath": "apps/users/tsconfig.app.json"
+        "tsConfigPath": "apps/users/tsconfig.app.json",
+        "assets": [
+          {
+            "include": "proto/*.proto",
+            "watchAssets": true
+          }
+        ]
       }
     },
     "common": {
