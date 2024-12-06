@@ -20,7 +20,9 @@
     "test:e2e": "jest --config ./apps/riat/test/jest-e2e.json",
     "proto-ts-build": "npx protoc --plugin=protoc-gen-ts_proto=\".\\node_modules\\.bin\\protoc-gen-ts_proto.cmd\" --ts_proto_out=./libs/common/src/types/ --ts_proto_opt=nestJs=true ./proto/*.proto",
     "proto-sync": "node ./sync-proto",
-    "proto-build": "npm run proto-ts-build && npm run proto-sync"
+    "proto-build": "npm run proto-ts-build && npm run proto-sync",
+    "docker-dev": "docker compose --profile dev up --build --watch",
+    "docker-prod": "docker compose --profile prod up --build --detach"
   },
   "dependencies": {
     "@grpc/grpc-js": "^1.12.4",
@@ -29,10 +31,13 @@
     "@nestjs/core": "^10.0.0",
     "@nestjs/microservices": "^10.4.13",
     "@nestjs/platform-express": "^10.0.0",
+    "@nestjs/typeorm": "^10.0.2",
+    "pg": "^8.13.1",
     "reflect-metadata": "^0.2.0",
     "rxjs": "^7.8.1",
     "sync-content": "^2.0.1",
-    "ts-proto": "^2.5.0"
+    "ts-proto": "^2.5.0",
+    "typeorm": "^0.3.20"
   },
   "devDependencies": {
     "@nestjs/cli": "^10.0.0",
@@ -78,7 +83,8 @@
       "<rootDir>/libs/"
     ],
     "moduleNameMapper": {
-      "^@app/common(|/.*)$": "<rootDir>/libs/common/src/$1"
+      "^@app/common(|/.*)$": "<rootDir>/libs/common/src/$1",
+      "^@app/entities(|/.*)$": "<rootDir>/libs/entities/src/$1"
     }
   }
 }

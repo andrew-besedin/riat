@@ -1,12 +1,19 @@
-import { Controller, Get } from '@nestjs/common';
+import { Controller } from '@nestjs/common';
 import { UsersService } from './users.service';
+import {
+  CreateUserRequest,
+  CreateUserResponse,
+  UsersServiceClient,
+  UsersServiceControllerMethods,
+} from '@app/common/types/proto/users';
+import { Observable } from 'rxjs';
 
 @Controller()
-export class UsersController {
+@UsersServiceControllerMethods()
+export class UsersController implements UsersServiceClient {
   constructor(private readonly usersService: UsersService) {}
 
-  @Get()
-  getHello(): string {
-    return this.usersService.getHello();
+  createUser(request: CreateUserRequest): Observable<CreateUserResponse> {
+    return this.usersService.createUser(request);
   }
 }
