@@ -13,6 +13,7 @@ import { DataSource } from 'typeorm';
         port: 5432,
         username: 'postgres',
         password: process.env.DB_PASSWORD,
+        database: process.env.DB_NAME,
         entities: [],
         synchronize: true,
       }),

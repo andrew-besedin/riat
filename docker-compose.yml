@@ -24,7 +24,7 @@ services:
     ports:
       - 5433:5432
     volumes:
-      - pgdata:/var/lib/postgresql/data 
+      - pgdata-riat:/var/lib/postgresql/data 
     profiles:
       - dev
       - prod
@@ -77,4 +77,4 @@ services:
       - NODE_ENV=production
 
 volumes:
-  pgdata:
+  pgdata-riat:
