@@ -35,6 +35,8 @@
     "@nestjs/swagger": "^8.1.0",
     "@nestjs/throttler": "^6.2.1",
     "@nestjs/typeorm": "^10.0.2",
+    "amqp-connection-manager": "^4.1.14",
+    "amqplib": "^0.10.5",
     "install": "^0.13.0",
     "npm": "^10.9.2",
     "pg": "^8.13.1",
