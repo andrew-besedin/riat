@@ -7,6 +7,11 @@ import {
 } from '@app/common/types/proto/users';
 import { join } from 'path';
 import { ConfigModule } from '@nestjs/config';
+import { SessionsModule } from './sessions/sessions.module';
+import {
+  SESSIONS_PACKAGE_NAME,
+  SESSIONS_SERVICE_NAME,
+} from '@app/common/types/proto/sessions';
 
 @Module({
   imports: [
@@ -31,7 +36,24 @@ import { ConfigModule } from '@nestjs/config';
         },
       ],
     }),
+    ClientsModule.registerAsync({
+      isGlobal: true,
+      clients: [
+        {
+          name: SESSIONS_SERVICE_NAME,
+          useFactory: () => ({
+            transport: Transport.GRPC,
+            options: {
+              url: `${process.env.SESSIONS_SERVICE_HOST}:50051`,
+              package: SESSIONS_PACKAGE_NAME,
+              protoPath: join(__dirname, './proto/sessions.proto'),
+            },
+          }),
+        },
+      ],
+    }),
     UsersModule,
+    SessionsModule,
   ],
   controllers: [],
   providers: [],

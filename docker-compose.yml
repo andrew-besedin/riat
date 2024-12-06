@@ -13,6 +13,13 @@ x-users-service-base: &users-service-base
   expose:
     - 50051:50051
 
+x-sessions-service-base: &sessions-service-base
+  build:
+    context: .
+    dockerfile: ./docker/production/sessions.Dockerfile
+  expose:
+    - 50051:50051
+
 services:
   db:
     image: postgres
@@ -55,6 +62,18 @@ services:
     environment:
       - NODE_ENV=development
 
+  sessions-service-dev:
+    <<: *sessions-service-base
+    profiles:
+      - dev
+    command: npm run start:dev sessions
+    develop:
+      watch:
+        - action: sync
+          path: ./apps/sessions
+          target: /app/apps/sessions
+    environment:
+      - NODE_ENV=development
 
 
 
@@ -71,6 +90,13 @@ services:
   
   users-service-prod:
     <<: *users-service-base
+    profiles:
+      - prod
+    environment:
+      - NODE_ENV=production
+
+  sessions-service-prod:
+    <<: *sessions-service-base
     profiles:
       - prod
     environment:

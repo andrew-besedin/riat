@@ -63,6 +63,15 @@
       "compilerOptions": {
         "tsConfigPath": "libs/entities/tsconfig.lib.json"
       }
+    },
+    "sessions": {
+      "type": "application",
+      "root": "apps/sessions",
+      "entryFile": "main",
+      "sourceRoot": "apps/sessions/src",
+      "compilerOptions": {
+        "tsConfigPath": "apps/sessions/tsconfig.app.json"
+      }
     }
   }
 }

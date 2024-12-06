@@ -1,4 +1,4 @@
-import { Controller } from '@nestjs/common';
+import { Controller, Logger } from '@nestjs/common';
 import { UsersService } from './users.service';
 import {
   CreateUserRequest,
@@ -19,6 +19,7 @@ export class UsersController implements UsersServiceController {
     | Promise<CreateUserResponse>
     | Observable<CreateUserResponse>
     | CreateUserResponse {
+    Logger.log('createUser gRPC call: ', request);
     return this.usersService.createUser(request);
   }
 }
