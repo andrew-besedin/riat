@@ -19,7 +19,7 @@ import { join } from 'path';
             options: {
               url: `${process.env.USERS_SERVICE_HOST}:50051`,
               package: USERS_PACKAGE_NAME,
-              protoPath: join(__dirname, './proto/subscriptions.proto'),
+              protoPath: join(__dirname, './proto/users.proto'),
             },
           }),
         },
