@@ -5,6 +5,10 @@ import { TypeOrmModule } from '@nestjs/typeorm';
 import { DataSource } from 'typeorm';
 import { ConfigModule } from '@nestjs/config';
 import Users from '@app/entities/users.entity';
+import Bookings from '@app/entities/bookings.entity';
+import Films from '@app/entities/films.entity';
+import Halls from '@app/entities/halls.entity';
+import Sessions from '@app/entities/sessions.entity';
 
 @Module({
   imports: [
@@ -20,7 +24,7 @@ import Users from '@app/entities/users.entity';
         port: 5432,
         username: 'postgres',
         password: process.env.DB_PASSWORD,
-        entities: [Users],
+        entities: [Users, Bookings, Films, Halls, Sessions],
         synchronize: true,
       }),
 
@@ -29,7 +33,7 @@ import Users from '@app/entities/users.entity';
         return dataSource;
       },
     }),
-    TypeOrmModule.forFeature([Users]),
+    TypeOrmModule.forFeature([Users, Bookings, Films, Halls, Sessions]),
   ],
   controllers: [UsersController],
   providers: [UsersService],

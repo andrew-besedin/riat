@@ -20,6 +20,13 @@ x-sessions-service-base: &sessions-service-base
   expose:
     - 50051:50051
 
+x-booking-service-base: &booking-service-base
+  build:
+    context: .
+    dockerfile: ./docker/production/bookings.Dockerfile
+  expose:
+    - 50051:50051
+
 services:
   db:
     image: postgres
@@ -91,6 +98,19 @@ services:
       - NODE_ENV=development
 
 
+  bookings-service-dev:
+    <<: *booking-service-base
+    profiles:
+      - dev
+    command: npm run start:dev bookings
+    develop:
+      watch:
+        - action: sync
+          path: ./apps/bookings
+          target: /app/apps/bookings
+    environment:
+      - NODE_ENV=development
+
 
 
 
@@ -112,6 +132,13 @@ services:
 
   sessions-service-prod:
     <<: *sessions-service-base
+    profiles:
+      - prod
+    environment:
+      - NODE_ENV=production
+
+  bookings-service-prod:
+    <<: *booking-service-base
     profiles:
       - prod
     environment:

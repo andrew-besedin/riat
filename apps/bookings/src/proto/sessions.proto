@@ -1,0 +1,21 @@
+syntax = "proto3";
+
+package sessions;
+
+service SessionsService {
+    rpc GetSessionsList (Empty) returns (GetSessionsListResponse);
+}
+
+message Empty {}
+
+message GetSessionsListResponse {
+    repeated Session sessions = 1;
+}
+
+message Session {
+    int32 id = 1;
+    int32 hallId = 2;
+    int32 filmId = 3;
+    int32 startTime = 4;
+    repeated string bookedSeats = 5;
+}

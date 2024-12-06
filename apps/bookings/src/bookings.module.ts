@@ -1,14 +1,14 @@
 import { Module } from '@nestjs/common';
-import { SessionsController } from './sessions.controller';
-import { SessionsService } from './sessions.service';
-import { ConfigModule } from '@nestjs/config';
+import { BookingsController } from './bookings.controller';
+import { BookingsService } from './bookings.service';
 import { TypeOrmModule } from '@nestjs/typeorm';
+import Bookings from '@app/entities/bookings.entity';
+import { DataSource } from 'typeorm';
+import Users from '@app/entities/users.entity';
 import Sessions from '@app/entities/sessions.entity';
 import Films from '@app/entities/films.entity';
 import Halls from '@app/entities/halls.entity';
-import { DataSource } from 'typeorm';
-import Bookings from '@app/entities/bookings.entity';
-import Users from '@app/entities/users.entity';
+import { ConfigModule } from '@nestjs/config';
 
 @Module({
   imports: [
@@ -35,7 +35,7 @@ import Users from '@app/entities/users.entity';
     }),
     TypeOrmModule.forFeature([Users, Bookings, Films, Halls, Sessions]),
   ],
-  controllers: [SessionsController],
-  providers: [SessionsService],
+  controllers: [BookingsController],
+  providers: [BookingsService],
 })
-export class SessionsModule {}
+export class BookingsModule {}

@@ -1,4 +1,5 @@
-import { Column, Entity, PrimaryGeneratedColumn } from 'typeorm';
+import { Column, Entity, OneToMany, PrimaryGeneratedColumn } from 'typeorm';
+import Bookings from './bookings.entity';
 
 @Entity('users')
 export default class Users {
@@ -13,4 +14,7 @@ export default class Users {
 
   @Column()
   password: string;
+
+  @OneToMany(() => Bookings, (booking) => booking.account)
+  bookings: Bookings[];
 }

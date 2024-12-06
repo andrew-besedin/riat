@@ -14,6 +14,11 @@ import {
 } from '@app/common/types/proto/sessions';
 import { ThrottlerGuard, ThrottlerModule } from '@nestjs/throttler';
 import { APP_GUARD } from '@nestjs/core';
+import { BookingsModule } from './bookings/bookings.module';
+import {
+  BOOKINGS_PACKAGE_NAME,
+  BOOKINGS_SERVICE_NAME,
+} from '@app/common/types/proto/bookings';
 
 @Module({
   imports: [
@@ -60,8 +65,26 @@ import { APP_GUARD } from '@nestjs/core';
         },
       ],
     }),
+
+    ClientsModule.registerAsync({
+      isGlobal: true,
+      clients: [
+        {
+          name: BOOKINGS_SERVICE_NAME,
+          useFactory: () => ({
+            transport: Transport.GRPC,
+            options: {
+              url: `${process.env.BOOKINGS_SERVICE_HOST}:50051`,
+              package: BOOKINGS_PACKAGE_NAME,
+              protoPath: join(__dirname, './proto/bookings.proto'),
+            },
+          }),
+        },
+      ],
+    }),
     UsersModule,
     SessionsModule,
+    BookingsModule,
   ],
   controllers: [],
   providers: [

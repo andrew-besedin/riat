@@ -72,6 +72,15 @@
       "compilerOptions": {
         "tsConfigPath": "apps/sessions/tsconfig.app.json"
       }
+    },
+    "bookings": {
+      "type": "application",
+      "root": "apps/bookings",
+      "entryFile": "main",
+      "sourceRoot": "apps/bookings/src",
+      "compilerOptions": {
+        "tsConfigPath": "apps/bookings/tsconfig.app.json"
+      }
     }
   }
 }
