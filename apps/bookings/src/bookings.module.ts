@@ -10,6 +10,7 @@ import Films from '@app/entities/films.entity';
 import Halls from '@app/entities/halls.entity';
 import { ConfigModule } from '@nestjs/config';
 import { ClientsModule, Transport } from '@nestjs/microservices';
+import config from './config/configuration';
 
 @Module({
   imports: [
@@ -17,6 +18,7 @@ import { ClientsModule, Transport } from '@nestjs/microservices';
       isGlobal: true,
       envFilePath:
         process.env.NODE_ENV === 'development' ? '.development.env' : '.env',
+      load: [config],
     }),
     TypeOrmModule.forRootAsync({
       useFactory: () => ({
@@ -42,7 +44,14 @@ import { ClientsModule, Transport } from '@nestjs/microservices';
           name: 'BOOKINGS_RMQ',
           transport: Transport.RMQ,
           options: {
-            urls: ['amqp://localhost:5672'],
+            urls: [
+              {
+                protocol: 'amqp',
+                hostname: process.env.RABBITMQ_HOST,
+                username: process.env.RABBITMQ_DEFAULT_USER,
+                password: process.env.RABBITMQ_DEFAULT_PASS,
+              },
+            ],
             queue: 'bookings_queue',
           },
         },

@@ -32,6 +32,14 @@ x-bookings-consumer-base: &bookings-consumer-base
     context: .
     dockerfile: ./docker/production/bookings-consumer.Dockerfile
 
+x-rabbitmq-riat-base: &rabbitmq-riat-base
+  image: rabbitmq:3-management
+  ports:
+    - 5672:5672
+    - 15672:15672
+  volumes:
+    - rabbitmq_data:/var/lib/rabbitmq
+
 services:
   db:
     image: postgres
@@ -48,20 +56,12 @@ services:
       - dev
       - prod
 
-  rabbitmq-riat:
-    image: rabbitmq:3-management
-    ports:
-      - 5672:5672
-      - 15672:15672
-    volumes:
-      - rabbitmq_data:/var/lib/rabbitmq
-    environment:
-      - RABBITMQ_DEFAULT_USER=andrew
-      - RABBITMQ_DEFAULT_PASS=Y98213KQSNDKJASKDLJNka
-      - ENV=development
+  rabbitmq-riat-dev:
+    <<: *rabbitmq-riat-base
     profiles:
       - dev
-      - prod
+    env_file:
+      - .development.env
  
   api-gateway-dev:
     <<: *api-gateway-base
@@ -162,6 +162,13 @@ services:
       - prod
     environment:
       - NODE_ENV=production
+
+  rabbitmq-riat-prod:
+    <<: *rabbitmq-riat-base
+    profiles:
+      - prod
+    env_file:
+      - .env
 
   bookings-consumer-prod:
     <<: *bookings-consumer-base
